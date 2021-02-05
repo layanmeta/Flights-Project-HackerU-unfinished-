@@ -23,7 +23,7 @@ namespace FlightsProject
             List<Object> list = new List<object>();
             while (reader.Read() == true)
             {
-              
+
                 var e = new
                 {
                     name_Country = reader["Name"],
@@ -37,7 +37,17 @@ namespace FlightsProject
         }
         public void Add(Country c)
         {
+            //using(SqlConnection conn = new SqlConnection())
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Name", c.Name);
 
+                cmd.ExecuteNonQuery();
+
+            }
         }
 
         public Country Get()

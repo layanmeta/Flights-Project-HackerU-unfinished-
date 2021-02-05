@@ -45,4 +45,5 @@ namespace FlightsProject
             return $"{Newtonsoft.Json.JsonConvert.SerializeObject(this)}";
         }
     }
+
 }

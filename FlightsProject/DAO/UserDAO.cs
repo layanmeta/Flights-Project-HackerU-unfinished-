@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class UserDAO
+    class UserDAO : IUserDAO
     {
         public List<User> GetAllUser()
         {
@@ -35,6 +35,41 @@ namespace FlightsProject
             }
             cmd.Connection.Close();
             return users;
+        }
+        public void Add(User a)
+        {
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Username", a.Username);
+                cmd.Parameters.AddWithValue(" @Password", a.Password);
+                cmd.Parameters.AddWithValue(" @Email", a.Email);
+                cmd.Parameters.AddWithValue(" @User_Role", a.User_Role);
+                cmd.ExecuteNonQuery();
+
+            }
+        }
+
+        public User Get()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<User> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(User t)
+        {
+            throw new NotImplementedException();
         }
     }
 }
