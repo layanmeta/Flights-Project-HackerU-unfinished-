@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class CountryDAOPGSQL : ICountryDAO
+    class CountryDAOSQL : ICountryDAO
     {
         public List<Country> GetAllCountries()
         {
