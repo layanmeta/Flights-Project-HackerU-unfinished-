@@ -7,6 +7,6 @@ namespace FlightsProject
 {
     class ConfigApp
     {
-        static public SqlConnection ConnectionString = new SqlConnection(@"Data Source=.;Initial Catalog=Project");
+        static public SqlConnection ConnectionString = new SqlConnection(@"Data Source=MSI;Initial Catalog=Project;Trusted_Connection=True");
     }
 }

@@ -4,8 +4,12 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Customer : IPoco, IUser
+   public class Customer : IPoco, IUser
     {
+        public Customer()
+        {
+
+        }
         public Customer(string first_Name, string last_Name, string address, int credit_Card_No, int user_Id, int phone_No)
         {
             First_Name = first_Name;

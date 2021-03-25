@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Country : IPoco
+    public class Country : IPoco
     {
         
         public Country()

@@ -8,7 +8,7 @@ namespace FlightsProject
     {
         void Add(T t);
 
-        T Get();
+        T Get(int id);
 
         List<T> GetAll();
 

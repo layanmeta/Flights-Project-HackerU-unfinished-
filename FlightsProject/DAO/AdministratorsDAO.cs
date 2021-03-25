@@ -6,34 +6,9 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class AdministratorsDAO : IAdminDAO
+    public class AdministratorsDAO : IAdminDAO
     {
-        public List<Administrators> GetAllAdmins()
-        {
-            List<Administrators> administrators = new List<Administrators>();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = ConfigApp.ConnectionString;
-            cmd.Connection.Open();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Administrators";
-
-
-            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-            List<Object> list = new List<object>();
-            while (reader.Read() == true)
-            {
-
-                var e = new
-                {
-                    ID = reader["ID"],
-                    User_Id = reader["User_Id"]
-                };
-                list.Add(e);
-            }
-            cmd.Connection.Close();
-            return administrators;
-        }
+       
         public void Add(Administrators a)
         {
           
@@ -42,6 +17,7 @@ namespace FlightsProject
                 cmd.Connection = ConfigApp.ConnectionString;
                 cmd.Connection.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "CreateAdministrators";
                 cmd.Parameters.AddWithValue("@First_Name", a.First_Name);
                 cmd.Parameters.AddWithValue(" @Last_Name", a.Last_Name);
                 cmd.Parameters.AddWithValue(" @User_Id", a.User_Id);
@@ -52,24 +28,64 @@ namespace FlightsProject
             }
         }
 
-        public Administrators Get()
+        public Administrators Get(int id)
         {
             throw new NotImplementedException();
         }
 
         public List<Administrators> GetAll()
         {
-            throw new NotImplementedException();
+            List<Administrators> administrators = new List<Administrators>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT * FROM Administrators";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            
+            while (reader.Read() == true)
+            {
+
+                Administrators e = new Administrators
+                {
+                    First_Name = (string)reader["First_Name"],
+                    Last_Name = (string)reader["Last_Name"],
+                    Level = (int)reader["Level"],
+                    User_Id = (int)reader["User_Id"],
+                    Id = (int)reader["Id"]
+                };
+                administrators.Add(e);
+            }
+            cmd.Connection.Close();
+            return administrators;
         }
 
         public void Remove(long id)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"DELETE FROM Administrators WHERE Id={id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public void Update(Administrators t)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"UPDATE Administrators SET First_Name='{t.First_Name}',Last_Name='{t.Last_Name}',Level={t.Level},User_Id={t.User_Id} WHERE Id={t.Id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

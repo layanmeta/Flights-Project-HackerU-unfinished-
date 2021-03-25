@@ -4,8 +4,12 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Flight : IPoco
+    public class Flight : IPoco
     {
+        public Flight()
+        {
+
+        }
         public Flight(int airline_Company_Id, int destination_Country_Id, DateTime departure_Time, DateTime landing_Time, int remaining_Tickets, int origin_Country_Id)
         {
             Airline_Company_Id = airline_Company_Id;

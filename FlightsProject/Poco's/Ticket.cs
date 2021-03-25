@@ -4,8 +4,12 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Ticket : IPoco
+    public class Ticket : IPoco
     {
+        public Ticket()
+        {
+
+        }
         public Ticket(int flight_Id, int customer_Id)
         {
             Flight_Id = flight_Id;

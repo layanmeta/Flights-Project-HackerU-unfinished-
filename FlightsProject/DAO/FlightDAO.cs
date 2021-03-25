@@ -6,38 +6,8 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class FlightDAO : IFlightDAO
+   public class FlightDAO : IFlightDAO
     {
-        public List<Flight> GetAllFlights()
-        {
-            List<Flight> flight = new List<Flight>();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = ConfigApp.ConnectionString;
-            cmd.Connection.Open();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Flights";
-
-
-            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-            List<Object> list = new List<object>();
-            while (reader.Read() == true)
-            {
-
-                var e = new
-                {
-                    ID = reader["ID"],
-                    airline_Company_Id = reader["Airline_Company_Id"],
-                    destination_Country_Id = reader["Departure_Time"],
-                    landing_Time = reader["Landing_Time"],
-                    Destination_Country_Id = reader["destination_Country_Id"],
-                    remaining_Tickets = reader["Remaining_Tickets"],
-                    origin_Country_Id = reader["Origin_Country_Id"],
-                };
-                list.Add(e);
-            }
-            cmd.Connection.Close();
-            return flight;
-        }
         public void Add(Flight a)
         {
             using (SqlCommand cmd = new SqlCommand())
@@ -45,6 +15,7 @@ namespace FlightsProject
                 cmd.Connection = ConfigApp.ConnectionString;
                 cmd.Connection.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "CreateCustomer";
                 cmd.Parameters.AddWithValue("@Airline_Company_Id", a.Airline_Company_Id);
                 cmd.Parameters.AddWithValue(" @Destination_Country_Id", a.Destination_Country_Id);
                 cmd.Parameters.AddWithValue(" @Departure_Time", a.Departure_Time);
@@ -92,24 +63,66 @@ namespace FlightsProject
             throw new NotImplementedException();
         }
 
-        public Flight Get()
+        public Flight Get(int id)
         {
             throw new NotImplementedException();
         }
 
         public List<Flight> GetAll()
         {
-            throw new NotImplementedException();
+
+            List<Flight> flight = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT * FROM Flights";
+
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flight.Add(e);
+            }
+            cmd.Connection.Close();
+            return flight;
         }
 
         public void Remove(long id)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"DELETE FROM Flights WHERE Id={id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public void Update(Flight t)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"UPDATE Flights SET Airline_Company_Id={t.Airline_Company_Id},Destination_Country_Id={t.Destination_Country_Id},Landing_Time={t.Landing_Time},Remaining_Tickets={t.Remaining_Tickets},Origin_Country_Id={t.Origin_Country_Id} WHERE Id={t.Id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
     }
 }

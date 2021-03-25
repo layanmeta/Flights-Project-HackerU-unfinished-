@@ -4,8 +4,13 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class User : IPoco
+    public class User : IPoco
     {
+        public User()
+        {
+
+        }
+
         public User(string username, string password, string email, int user_Role)
         {
             Username = username;

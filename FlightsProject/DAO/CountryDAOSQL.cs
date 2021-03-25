@@ -6,35 +6,8 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class CountryDAOSQL : ICountryDAO
+    public class CountryDAOSQL : ICountryDAO
     {
-        public List<Country> GetAllCountries()
-        {
-            List<Country> countries = new List<Country>();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = ConfigApp.ConnectionString;
-            cmd.Connection.Open();
-            cmd.CommandType = CommandType.Text;
-            cmd.CommandText = "SELECT * FROM Countries";
-
-
-            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
-
-            List<Object> list = new List<object>();
-            while (reader.Read() == true)
-            {
-
-                var e = new
-                {
-                    name_Country = reader["Name"],
-                    Id_Country = reader["Id"]
-                };
-                list.Add(e);
-            }
-
-            cmd.Connection.Close();
-            return countries;
-        }
         public void Add(Country c)
         {
             //using(SqlConnection conn = new SqlConnection())
@@ -43,31 +16,86 @@ namespace FlightsProject
                 cmd.Connection = ConfigApp.ConnectionString;
                 cmd.Connection.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "CreateCountry";
                 cmd.Parameters.AddWithValue("@Name", c.Name);
 
                 cmd.ExecuteNonQuery();
-
             }
         }
 
-        public Country Get()
+        public Country Get(int id)
         {
-            throw new NotImplementedException();
+            Country country = new Country();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT * FROM Countries WHERE Id={id}";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+                country = new Country
+                {
+                    Name = (string)reader["Name"],
+                    Id = (int)reader["Id"]
+                };
+            }
+
+            cmd.Connection.Close();
+            return country;
         }
 
         public List<Country> GetAll()
         {
-            throw new NotImplementedException();
+            List<Country> countries = new List<Country>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "SELECT * FROM Countries";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+                Country c = new Country
+                {
+                    Name = (string)reader["Name"],
+                    Id = (int)reader["Id"]
+                };
+                countries.Add(c);
+            }
+
+            cmd.Connection.Close();
+            return countries;
         }
 
         public void Remove(long id)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"DELETE FROM Countries WHERE Id={id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public void Update(Country t)
         {
-            throw new NotImplementedException();
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = ConfigApp.ConnectionString;
+                cmd.Connection.Open();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = $"UPDATE Countries SET Name='{t.Name}' WHERE Id={t.Id}";
+
+                cmd.ExecuteNonQuery();
+            }
         }
 
     }

@@ -4,8 +4,12 @@ using System.Text;
 
 namespace FlightsProject
 {
-    class Administrators : IPoco, IUser
+    public class Administrators : IPoco, IUser
     {
+        public Administrators()
+        {
+
+        }
         public Administrators(string first_Name, string last_Name, int level, int user_Id)
         {
             First_Name = first_Name;
