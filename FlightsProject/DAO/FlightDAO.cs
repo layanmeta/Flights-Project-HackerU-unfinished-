@@ -35,32 +35,181 @@ namespace FlightsProject
 
         public Flight GetFlightById(int id)
         {
-            throw new NotImplementedException();
+
+            List<Flight> flightById = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights WHERE Flights.Id = {id}";
+
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightById.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightById;
         }
 
         public IList<Flight> GetFlightsByOriginCountry(int countryCode)
         {
-            throw new NotImplementedException();
+
+            List<Flight> flightByOriginCountry = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights WHERE Flights.Origin_Country_Id = {countryCode}";
+
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightByOriginCountry.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightByOriginCountry;
         }
 
         public IList<Flight> GetFlightsByDestinationCountry(int countryCode)
         {
-            throw new NotImplementedException();
+            List<Flight> flightByDestinationCountry = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights WHERE Flights.Destination_Country_Id = {countryCode}";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightByDestinationCountry.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightByDestinationCountry;
         }
 
         public IList<Flight> GetFlightsByDepatrureDate(DateTime departureDate)
         {
-            throw new NotImplementedException();
+
+            List<Flight> flightByDepatrureDate = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights WHERE Flights.Departure_Time = {departureDate}";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightByDepatrureDate.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightByDepatrureDate;
         }
 
         public IList<Flight> GetFlightsByLandingDate(DateTime landingDate)
         {
-            throw new NotImplementedException();
+            List<Flight> flightByLandingDate = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights WHERE Flights.Landing_Time  = {landingDate}";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightByLandingDate.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightByLandingDate;
         }
 
         public IList<Flight> GetFlightsByCustomer(Customer customer)
         {
-            throw new NotImplementedException();
+            List<Flight> flightByCustomer = new List<Flight>();
+            SqlCommand cmd = new SqlCommand();
+            cmd.Connection = ConfigApp.ConnectionString;
+            cmd.Connection.Open();
+            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = $"SELECT (Id, Airline_Company_Id, Departure_Time, Landing_Time, Remaining_Tickets, Origin_Country_Id) FROM Flights JOIN Customers ON Customers.Id = Flights.Id WHERE Customers.Id ={customer} ";
+
+            SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
+
+            while (reader.Read() == true)
+            {
+
+                Flight e = new Flight
+                {
+                    Id = (int)reader["Id"],
+                    Airline_Company_Id = (int)reader["Airline_Company_Id"],
+                    Destination_Country_Id = (int)reader["Departure_Time"],
+                    Landing_Time = (DateTime)reader["Landing_Time"],
+                    Remaining_Tickets = (int)reader["Remaining_Tickets"],
+                    Origin_Country_Id = (int)reader["Origin_Country_Id"],
+                };
+                flightByCustomer.Add(e);
+            }
+            cmd.Connection.Close();
+            return flightByCustomer;
         }
 
         public Flight Get(int id)

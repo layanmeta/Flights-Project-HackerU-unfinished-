@@ -61,7 +61,7 @@ namespace FlightsProject
             cmd.Connection = ConfigApp.ConnectionString;
             cmd.Connection.Open();
             cmd.CommandType = CommandType.Text;
-            cmd.CommandText = $"SELECT (Id, Name, Country_Id, User_Id) FROM Airline_Companies JOIN Countries ON Countries.Id = Airline_Companies.Country_IdWHERE Countries.Id = {countryId}";
+            cmd.CommandText = $"SELECT (Id, Name, Country_Id, User_Id) FROM Airline_Companies JOIN Countries ON Countries.Id = Airline_Companies.Country_Id WHERE Countries.Id = {countryId}";
 
 
             SqlDataReader reader = cmd.ExecuteReader(CommandBehavior.Default);
